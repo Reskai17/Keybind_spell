@@ -1,0 +1,539 @@
+Fireball:
+    spell-class: ".targeted.FireballSpell"
+    cooldown: 20
+    range: 30
+    require-entity-target: false
+    can-target: monsters
+    explosion-size: 1.5
+    check-plugins: true
+    damage-multiplier: 2
+    small-fireball: false
+    no-fire: false
+    no-explosion: false
+    no-explosion-effect: false
+    no-explosion-damage: 5
+    no-explosion-damage-range: 3
+Arc-Missile:
+    spell-class: ".instant.ParticleProjectileSpell"
+    cooldown: 1
+    change-pitch: true
+    controllable: false
+    projectile-velocity: 30
+    tick-interval: 1
+    max-distance: 15
+    special-effect-interval: 1
+    stop-on-hit-entity: false
+    stop-on-hit-ground: true
+    relative-offset: 0,1,0
+    spell-on-hit-entity: Arc-Missile-Dmg
+    effects:
+        eff1:
+            position: special
+            effect: particles
+            particle-name: end_rod
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 0.5
+            count: 10
+            speed: 0.03
+        Sound:
+            position: caster
+            effect: sound 
+            sound: block.glass.break
+            category: PLAYERS
+            volume: 3
+            pitch: 3
+Arc-Missile-Dmg:
+    spell-class: ".targeted.PainSpell"
+    damage: 5
+Blink:
+    spell-class: ".targeted.BlinkSpell"
+    cooldown: 15
+    range: 15
+    effects:
+        1:
+            position: line
+            effect: particles
+            particle-name: REDSTONE
+            color: 7400ff
+            horiz-spread: 0.5
+            vert-spread: 0.5
+            count: 200
+            size: 0.5
+        Sound:
+            position: caster
+            effect: sound 
+            sound: entity.enderman.teleport
+            category: PLAYERS
+            volume: 3
+            pitch: 3
+Empowered:
+    spell-class: ".buff.EmpowerSpell"
+    power-multiplier: 2.0
+    max-power-multiplier: 4.0
+    cooldown: 15
+    duration: 5
+    str-cast-self: "You feel empowered."
+    str-cast-others: "%a powers up!"
+    effects:
+        lava:
+              position: buff
+              effect: particles
+              particle-name: Redstone
+              color: ff5d00
+              horiz-spread: 0.3
+              y-offset: 1
+              vert-spread: 1.5
+              speed: 0.4
+              count: 200
+        Sound:
+              position: caster
+              effect: sound 
+              sound: entity.wither.shoot
+              category: PLAYERS
+              volume: 0.5
+              pitch: 0.7
+Windwalk:
+    spell-class: ".buff.WindwalkSpell"
+    cooldown: 90
+    enabled: true
+    fly-speed: 0.05
+    launch-speed: 1
+    cancel-on-land: false
+    cancel-on-logout: true
+    cancel-on-teleport: true
+    duration: 10
+mage_passive:
+    spell-class: ".PassiveSpell"
+    triggers:
+        - kill
+    spells:
+        - mage_passive_cdred (mode=hard)
+mage_passive_cdred:
+    spell-class: ".targeted.ModifyCooldownSpell"
+    seconds: 5
+    spells: 
+    target-self: true
+    str-cast-self: §oCooldown Reduced
+##----------------Mage Extra Spells Release-----------------##
+Wither-Skull:
+    spell-class: ".instant.ProjectileSpell"
+    projectile-type: Witherskull
+    cooldown: 2
+    gravity: false
+    velocity: 0.3
+    hit-radius: 1
+    spell: Wither-Skull-Dmg
+    spell-on-hit-ground: Wither_cloud
+    effects:
+        Sound:
+              position: caster
+              effect: sound 
+              sound: entity.wither.shoot
+              category: PLAYERS
+              volume: 0.1
+              pitch: 1
+Wither-Skull-Dmg:
+    spell-class: ".targeted.PotionEffectSpell"
+    can-target-location: false
+    type: wither
+    duration: 100
+    strength: 1
+    ambient: false
+    hidden: false
+Wither_cloud:
+    spell-class: ".targeted.ParticleCloudSpell"
+    particle-name: redstone
+    dust-color: 302f2e
+    wait-time-ticks: 5
+    duration-ticks: 40
+    duration-ticks-on-use: 0
+    reapplication-delay-ticks: 10
+    radius: 1
+    radius-on-use: 0
+    radius-per-tick: 0.01
+    potion-effects:
+        - wither 100 1 true true true
+Curse-of-Withering:
+    spell-class: ".targeted.AreaEffectSpell"
+    cooldown: 30
+    horizontal-radius: 10
+    vertical-radius: 5
+    fail-if-no-targets: false
+    spells: [Wither]
+    effects:
+        1:
+            position: caster
+            effect: particles
+            particle-name: SQUID_INK
+            horiz-spread: 10
+            vert-spread: 5
+            count: 500
+            size: 3
+        2:
+            position: caster
+            effect: particles
+            particle-name: REDSTONE
+            color: 5d5d5d
+            horiz-spread: 10
+            vert-spread: 5
+            count: 500
+            size: 1.5
+        Sound:
+              position: caster
+              effect: sound 
+              sound: entity.wither.shoot
+              category: PLAYERS
+              volume: 0.1
+              pitch: 1
+Wither:
+    spell-class: ".targeted.PotionEffectSpell"
+    type: wither
+    duration: 400
+    strength: 0
+    ambient: false
+    hidden: false
+Flame-Beam:
+    spell-class: ".instant.ParticleProjectileSpell"
+    change-pitch: true
+    controllable: false
+    cooldown: 20
+    projectile-velocity: 40
+    hit-radius: 2
+    tick-interval: 1
+    max-distance: 40
+    special-effect-interval: 1
+    stop-on-hit-entity: false
+    stop-on-hit-ground: true
+    relative-offset: 0,1,0
+    spell-on-hit-entity: combust
+    effects:
+        eff1:
+            position: special
+            effect: particles
+            particle-name: flame
+            color: FFFF00
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 1
+            count: 25
+        eff2:
+            position: special
+            effect: particles
+            particle-name: REDSTONE
+            color: ffb900
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 1
+            count: 25
+        eff3:
+            position: special
+            effect: particles
+            particle-name: REDSTONE
+            color: ff8b00
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 1
+            count: 15
+        eff4:
+            position: special
+            effect: particles
+            particle-name: REDSTONE
+            color: ff6400
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 0.7
+            count: 5
+        Sound:
+              position: caster
+              effect: sound 
+              sound: item.firecharge.use
+              category: PLAYERS
+              volume: 0.7
+              pitch: 1
+combust:
+    spell-class: ".targeted.CombustSpell"
+    fire-ticks: 100
+    fire-tick-damage: 2
+    prevent-immunity: true
+    target-players: true
+    check-plugins: true
+    str-no-target: No target found.
+    helper-spell: true
+Lava-Geyser-Geyser:
+    spell-class: ".targeted.GeyserSpell"
+    geyser-type: lava
+Lava-Geyser-Combust:
+    spell-class: ".targeted.CombustSpell"
+    fire-ticks: 40
+    fire-tick-damage: 3
+    prevent-immunity: true
+    target-players: true
+    check-plugins: true
+    str-no-target: No target found.
+    helper-spell: true
+Lava-Geyser:
+    spell-class: ".instant.ParticleProjectileSpell"
+    height-from-surface: 0.1
+    cooldown: 20
+    controllable: true
+    hug-surface: true
+    can-target: players,nonplayers
+    spell-on-hit-entity: Lava-Geyser-Multi
+    effects:
+        eff1:
+            position: special
+            effect: particles
+            particle-name: REDSTONE
+            color: ff9b00
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 1
+            count: 20
+        eff2:
+            position: special
+            effect: particles
+            particle-name: REDSTONE
+            color: ff7800
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 1
+            count: 25
+        eff3:
+            position: special
+            effect: particles
+            particle-name: REDSTONE
+            color: ffc500
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 1
+            count: 10 
+        Sound:
+              position: caster
+              effect: sound 
+              sound: block.lava.pop
+              category: PLAYERS
+              volume: 0.7
+              pitch: 1
+        Sound2:
+              position: target
+              effect: sound 
+              sound: block.lava.extinguish
+              category: PLAYERS
+              volume: 0.7
+              pitch: 1
+Lava-Geyser-Multi:
+    spell-class: ".TargetedMultiSpell"
+    spells:
+        - Lava-Geyser-Combust
+        - DELAY 5
+        - Lava-Geyser-Geyser
+##----Unique------------##
+replace-base:
+    spell-class: ".targeted.ReplaceSpell"
+    point-blank: true
+    duration: 1200
+    replace-blocks: 
+        - all
+    replace-with:
+        - netherrack
+        - soul_soil
+        - magma_block
+        - soul_sand
+        - nether_wart_block
+    replace-blacklist:
+        - bedrock
+        - air
+        - grass
+        - basalt
+    radius-horiz: 20
+    radius-down: 8
+    radius-up: 10
+replace-logs:
+    spell-class: ".targeted.ReplaceSpell"
+    point-blank: true
+    duration: 1200
+    replace-blocks: 
+        - oak_log
+        - birch_log
+        - spruce_log
+        - jungle_log
+        - acacia_log
+        - dark_oak_log
+        - mangrove_log
+    replace-with:
+        - basalt
+    replace-blacklist:
+        - bedrock
+        - air
+        - grass
+    radius-horiz: 20
+    radius-down: 8
+    radius-up: 10
+replace-leaves:
+    spell-class: ".targeted.ReplaceSpell"
+    point-blank: true
+    duration: 1200
+    replace-blocks: 
+        - oak_leaves
+        - birch_leaves
+        - spruce_leaves
+        - jungle_leaves
+        - acacia_leaves
+        - dark_oak_leaves
+        - mangrove_leaves
+    replace-with:
+        - air
+    replace-blacklist:
+        - bedrock
+        - air
+        - grass
+    radius-horiz: 20
+    radius-down: 8
+    radius-up: 10
+Domain-Expansion:
+    spell-class: ".MultiSpell"
+    spells:
+        - replace-leaves
+        - DELAY 5
+        - replace-logs
+        - DELAY 5
+        - replace-base
+        - Domain-Buff
+        - Domain-fly
+Domain-Buff:
+    spell-class: ".buff.DummySpell"
+    duration: 60
+    toggle: false
+Domain-fly:
+    spell-class: ".buff.WindwalkSpell"
+    duration: 60
+    fly-speed: 0.05
+    launch-speed: 10
+    max-altitude: 250
+    cancel-on-land: false
+Domain-Lava-Passive:
+    spell-class: ".PassiveSpell"
+    always-granted: true
+    triggers:
+        - leftclickitem
+    spells:
+        - Flame-Beam-Domain (mode=full)
+    modifiers:
+        - buffactive Domain-Buff require
+Flame-Beam-Domain:
+    spell-class: ".instant.ParticleProjectileSpell"
+    change-pitch: true
+    controllable: false
+    cooldown: 3
+    projectile-velocity: 40
+    hit-radius: 3
+    tick-interval: 1
+    max-distance: 40
+    special-effect-interval: 1
+    stop-on-hit-entity: false
+    stop-on-hit-ground: true
+    relative-offset: 0,1,0
+    spell-on-hit-entity: combust-domain-multi
+    effects:
+        eff1:
+            position: special
+            effect: particles
+            particle-name: flame
+            color: FFFF00
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 1
+            count: 25
+        eff2:
+            position: special
+            effect: particles
+            particle-name: REDSTONE
+            color: ffb900
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 1
+            count: 25
+        eff3:
+            position: special
+            effect: particles
+            particle-name: REDSTONE
+            color: ff8b00
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 1
+            count: 15
+        eff4:
+            position: special
+            effect: particles
+            particle-name: REDSTONE
+            color: ff6400
+            horiz-spread: 0.1
+            vert-spread: 0.1
+            size: 0.7
+            count: 5
+        Sound:
+              position: caster
+              effect: sound 
+              sound: item.firecharge.use
+              category: PLAYERS
+              volume: 0.7
+              pitch: 1
+combust-domain-multi:
+    spell-class: ".TargetedMultiSpell"
+    spells:
+        - combust-domain
+        - domain-dmg
+combust-domain:
+    spell-class: ".targeted.CombustSpell"
+    fire-ticks: 80
+    fire-tick-damage: 4
+    prevent-immunity: true
+    target-players: true
+    check-plugins: true
+    str-no-target: No target found.
+    helper-spell: true
+domain-dmg:
+    spell-class: ".targeted.PainSpell"
+    damage: 6
+Domain-AoE:
+    spell-class: ".targeted.AreaEffectSpell"
+    horizontal-radius: 10
+    vertical-radius: 10
+    spells: [Lava-Geyser-Domain]
+    effects:
+      Flame:
+        position: caster
+        effect: particles
+        particle-name: flame
+        horiz-spread: 3
+        vert-spread: 3
+        speed: 0.05
+        count: 50
+      Smoke:
+        position: caster
+        effect: particles
+        particle-name: campfire_cosy_smoke
+        horiz-spread: 2
+        vert-spread: 2
+        speed: 0.05
+        count: 5
+      Burn_Sound:
+        position: caster
+        effect: sound
+        sound: entity.blaze.burn
+        volume: 2
+        pitch: 2
+Domain-Passive-Dmg:
+    spell-class: ".PassiveSpell"
+    always-granted: true
+    triggers:
+        - ticks 40
+    spells:
+        - Domain-AoE
+    modifiers:
+        - buffactive Domain-Buff require
+Lava-Geyser-Domain:
+    spell-class: ".targeted.GeyserSpell"
+    geyser-type: lava
+    damage: 5

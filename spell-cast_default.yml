@@ -1,0 +1,654 @@
+##-------------Guardian-------------------##
+variables: 
+    bindSneak:
+        type: playerstring
+        default: "N/A"
+        permanent: true
+    bindLeft:
+        type: playerstring
+        default: "N/A"
+        permanent: true
+    bindRight:
+        type: playerstring
+        default: "N/A"
+        permanent: true
+    bindSRight:
+        type: playerstring
+        default: "N/A"
+        permanent: true
+    bindSLeft:
+        type: playerstring
+        default: "N/A"
+        permanent: true
+BindCastMage:
+    spell-class: ".MenuSpell"
+    cast-item: book
+    title: "Select a Slot"
+    effects:
+        Sound:
+            position: caster
+            effect: soundpersonal
+            sound: item.book.page_turn
+            pitch: 0.8
+            volume: 0.4
+    always-granted: true
+    cooldown: 2
+    can-cast-by-command: true
+    stay-open-non-option: true
+    bypass-normal-cast: false
+    options:
+        Sneak:
+            slot: 0
+            item:
+                type: black_stained_glass_pane
+                name: "§7§l Bind to F"
+                lore:
+                    - "§o§8%var:bindSneak%"
+            stay-open: true
+            spell: BindSneakMage
+        Left:
+            slot: 1
+            item:
+                type: black_stained_glass_pane
+                name: "§7§l Bind to Left Click"
+                lore:
+                    - "§o§8%var:bindLeft%"
+            stay-open: true
+            spell: BindLeftMage
+        Right:
+            slot: 2
+            item:
+                type: black_stained_glass_pane
+                name: "§7§l Bind to Right Click"
+                lore:
+                    - "§o§8%var:bindRight%"
+            stay-open: true
+            spell: BindRightMage
+        SRight:
+            slot: 3
+            item:
+                type: black_stained_glass_pane
+                name: "§7§l Bind to Shift Right Click"
+                lore:
+                    - "§o§8%var:bindSRight%"
+            stay-open: true
+            spell: BindSRightMage
+        SLeft:
+            slot: 4
+            item:
+                type: black_stained_glass_pane
+                name: "§7§l Bind to Shift Left Click"
+                lore:
+                    - "§o§8%var:bindSLeft%"
+            stay-open: true
+            spell: BindSLeftMage
+        Reset:
+            slot: 8
+            item: 
+                type: red_stained_glass_pane
+                name: "Reset"
+            spell: Bind_Reset
+Bind_Reset:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSneak =0
+        - bindRight =0
+        - bindSRight =0
+        - bindLeft =0
+        - bindSLeft =0
+##---------------------Left--------------##
+cast_Left_Mage:
+    spell-class: ".PassiveSpell"
+    triggers:
+        - leftclickitem 
+    modifiers:
+        - sneaking deny
+        - buffactive Domain-buff deny
+        - holding stick require
+        - variablestringequals bindLeft:ArcMissile castinstead Arc-Missile (mode=full)
+        - variablestringequals bindLeft:WitherSkull castinstead Wither-Skull (mode=full)
+BindLeftMage:
+    spell-class: ".MenuSpell"
+    title: "Select a Spell"
+    effects:
+        Sound:
+            position: caster
+            effect: soundpersonal
+            sound: item.book.page_turn
+            pitch: 0.8
+            volume: 0.4
+    options:
+        Back:
+            slot: 8
+            item: 
+                type: red_stained_glass_pane
+                name: "Go back"
+            spell: BindCastMage
+            stay-open: true
+        ArcMissile:
+            slot: 0
+            item:
+                type: blaze_powder
+                name: "§lArc Missile"
+            stay-open: true
+            spell: ArcMissileLID
+            modifiers: 
+                - hasspell Arc-Missile require
+        Witherskull:
+            slot: 1
+            item:
+                type: blaze_powder
+                name: "§lWither Skull"
+            stay-open: true
+            spell: WitherSkullLID
+            modifiers: 
+                - hasspell Wither-Skull require
+##----------SLeft------------------##
+cast_SLeft_Mage:
+    spell-class: ".PassiveSpell"
+    triggers:
+        - leftclickitem
+    modifiers:
+        - sneaking require
+        - holding stick require
+        - variablestringequals bindSLeft:FireBall castinstead FireBall (mode=full)
+        - variablestringequals bindSLeft:Empower castinstead Empowered (mode=full)
+        - variablestringequals bindSLeft:CurseOfWithering castinstead Curse-of-Withering (mode=full)
+        - variablestringequals bindSLeft:FlameBeam castinstead Flame-Beam (mode=full)
+        - variablestringequals bindSLeft:LavaGeyser castinstead Lava-Geyser (mode=full)
+
+BindSLeftMage:
+    spell-class: ".MenuSpell"
+    title: "Select a Spell"
+    effects:
+        Sound:
+            position: caster
+            effect: soundpersonal
+            sound: item.book.page_turn
+            pitch: 0.8
+            volume: 0.4
+    options:
+        Back:
+            slot: 8
+            item: 
+                type: red_stained_glass_pane
+                name: "Go back"
+            spell: BindCastMage
+            stay-open: true
+        FireBall:
+            slot: 0
+            item:
+                type: blaze_powder
+                name: "§lFireBall"
+            stay-open: true
+            spell: FireBallSLID
+            modifiers: 
+                - hasspell FireBall require
+        Empower:
+            slot: 1
+            item:
+                type: blaze_powder
+                name: "§lEmpower"
+            stay-open: true
+            spell: EmpowerSLID
+            modifiers: 
+                - hasspell Empowered require
+        Curseofwithering:
+            slot: 2
+            item:
+                type: blaze_powder
+                name: "§lCurse of Withering"
+            stay-open: true
+            spell: CurseofwitheringSLID
+            modifiers: 
+                - hasspell Curse-of-Withering require
+        Flamebeam:
+            slot: 3
+            item:
+                type: blaze_powder
+                name: "§lFlame Beam"
+            stay-open: true
+            spell: FlamebeamSLID
+            modifiers: 
+                - hasspell Flame-Beam require
+        Lavageyser:
+            slot: 4
+            item:
+                type: blaze_powder
+                name: "§lLava Geyser"
+            stay-open: true
+            spell: LavaGeyserSLID
+            modifiers: 
+                - hasspell Lava-Geyser require
+##----------Right------------------##
+cast_Right_Mage:
+    spell-class: ".PassiveSpell"
+    triggers:
+        - rightclickitem
+    modifiers:
+        - sneaking deny
+        - holding stick require
+        - variablestringequals bindRight:FireBall castinstead FireBall (mode=full)
+        - variablestringequals bindRight:Empower castinstead Empowered (mode=full)
+        - variablestringequals bindRight:CurseOfWithering castinstead Curse-of-Withering (mode=full)
+        - variablestringequals bindRight:FlameBeam castinstead Flame-Beam (mode=full)
+        - variablestringequals bindRight:LavaGeyser castinstead Lava-Geyser (mode=full)
+
+BindRightMage:
+    spell-class: ".MenuSpell"
+    title: "Select a Spell"
+    effects:
+        Sound:
+            position: caster
+            effect: soundpersonal
+            sound: item.book.page_turn
+            pitch: 0.8
+            volume: 0.4
+    options:
+        Back:
+            slot: 8
+            item: 
+                type: red_stained_glass_pane
+                name: "Go back"
+            spell: BindCastMage
+            stay-open: true
+        FireBall:
+            slot: 0
+            item:
+                type: blaze_powder
+                name: "§lFireBall"
+            stay-open: true
+            spell: FireBallRID
+            modifiers: 
+                - hasspell FireBall require
+        Empower:
+            slot: 1
+            item:
+                type: blaze_powder
+                name: "§lEmpower"
+            stay-open: true
+            spell: EmpowerRID
+            modifiers: 
+                - hasspell Empowered require
+        Curseofwithering:
+            slot: 2
+            item:
+                type: blaze_powder
+                name: "§lCurse of Withering"
+            stay-open: true
+            spell: CurseofwitheringRID
+            modifiers: 
+                - hasspell Curse-of-Withering require
+        Flamebeam:
+            slot: 3
+            item:
+                type: blaze_powder
+                name: "§lFlame Beam"
+            stay-open: true
+            spell: FlamebeamRID
+            modifiers: 
+                - hasspell Flame-Beam require
+        Lavageyser:
+            slot: 4
+            item:
+                type: blaze_powder
+                name: "§lLava Geyser"
+            stay-open: true
+            spell: LavaGeyserRID
+            modifiers: 
+                - hasspell Lava-Geyser require
+##----------SRight------------------##
+cast_SRight_Mage:
+    spell-class: ".PassiveSpell"
+    triggers:
+        - rightclickitem
+    modifiers:
+        - sneaking require
+        - holding stick require
+        - variablestringequals bindSRight:FireBall castinstead FireBall (mode=full)
+        - variablestringequals bindSRight:Empower castinstead Empowered (mode=full)
+        - variablestringequals bindSRight:CurseOfWithering castinstead Curse-of-Withering (mode=full)
+        - variablestringequals bindSRight:FlameBeam castinstead Flame-Beam (mode=full)
+        - variablestringequals bindSRight:LavaGeyser castinstead Lava-Geyser (mode=full)
+        - variablestringequals bindSRight:DomainExpansion castinstead Domain-Expansion (mode=full)
+
+BindSRightMage:
+    spell-class: ".MenuSpell"
+    title: "Select a Spell"
+    effects:
+        Sound:
+            position: caster
+            effect: soundpersonal
+            sound: item.book.page_turn
+            pitch: 0.8
+            volume: 0.4
+    options:
+        Back:
+            slot: 8
+            item: 
+                type: red_stained_glass_pane
+                name: "Go back"
+            spell: BindCastMage
+            stay-open: true
+        FireBall:
+            slot: 0
+            item:
+                type: blaze_powder
+                name: "§lFireBall"
+            stay-open: true
+            spell: FireBallSRID
+            modifiers: 
+                - hasspell FireBall require
+        Empower:
+            slot: 1
+            item:
+                type: blaze_powder
+                name: "§lEmpower"
+            stay-open: true
+            spell: EmpowerSRID
+            modifiers: 
+                - hasspell Empowered require
+        Curseofwithering:
+            slot: 2
+            item:
+                type: blaze_powder
+                name: "§lCurse of Withering"
+            stay-open: true
+            spell: CurseofwitheringSRID
+            modifiers: 
+                - hasspell Curse-of-Withering require
+        Flamebeam:
+            slot: 3
+            item:
+                type: blaze_powder
+                name: "§lFlame Beam"
+            stay-open: true
+            spell: FlamebeamSRID
+            modifiers: 
+                - hasspell Flame-Beam require
+        Lavageyser:
+            slot: 4
+            item:
+                type: blaze_powder
+                name: "§lLava Geyser"
+            stay-open: true
+            spell: LavaGeyserSRID
+            modifiers: 
+                - hasspell Lava-Geyser require         
+        DomainExpansion:
+            slot: 5
+            item:
+                type: blaze_powder
+                name: "§lDomain Expansion"
+            stay-open: true
+            spell: DomainExpansionSRID
+            modifiers: 
+                - hasspell Domain-Expansion require     
+##-------------Sneak------------------##
+cast_Sneak_Mage:
+    spell-class: ".PassiveSpell"
+    cancel-default-action: true
+    triggers:
+        - offhandswap
+    modifiers:
+        - holding stick require
+        - variablestringequals bindSneak:Blink cast Blink (mode=full)
+        - variablestringequals bindSneak:Windwalk cast Windwalk (mode=full)
+BindSneakMage:
+    spell-class: ".MenuSpell"
+    title: "Select a Spell"
+    effects:
+        Sound:
+            position: caster
+            effect: soundpersonal
+            sound: item.book.page_turn
+            pitch: 0.8
+            volume: 0.4
+    options:
+        Back:
+            slot: 8
+            item: 
+                type: red_stained_glass_pane
+                name: "Go back"
+            spell: BindCastMage
+            stay-open: true
+        Blink:
+            slot: 0
+            item:
+                type: blaze_powder
+                name: "§lBlink"
+            stay-open: true
+            spell: BlinkID
+            modifiers: 
+                - hasspell Blink require
+        Windwalk:
+            slot: 1
+            item:
+                type: blaze_powder
+                name: "§lWindwalk"
+            stay-open: true
+            spell: WindwalkID
+            modifiers: 
+                - hasspell Windwalk require
+##----##
+ArcMissileLID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindLeft =Arc Missile
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+WitherSkullLID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindLeft =WitherSkull
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+FireBallSLID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSLeft =FireBall
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+EmpowerSLID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSLeft =Empower
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+CurseofwitheringSLID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSLeft =CurseOfWithering
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+FlamebeamSLID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSLeft =FlameBeam
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+LavaGeyserSLID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSLeft =LavaGeyser
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+FireBallRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindRight =FireBall
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+EmpowerRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindRight =Empower
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+CurseofwitheringRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindRight =CurseOfWithering
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+FlamebeamRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindRight =FlameBeam
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+LavaGeyserRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindRight =LavaGeyser
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+FireBallSRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSRight =FireBall
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+EmpowerSRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSRight =Empower
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+CurseofwitheringSRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSRight =CurseOfWithering
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+FlamebeamSRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSRight =FlameBeam
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+LavaGeyserSRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSRight =LavaGeyser
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+DomainExpansionSRID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSRight =DomainExpansion
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+BlinkID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSneak =Blink
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+WindwalkID:
+    spell-class: ".instant.DummySpell"
+    variable-mods-cast:
+        - bindSneak =Windwalk
+    effects:
+        Sound2:
+            position: caster
+            effect: soundpersonal
+            sound: block.enchantment_table.use
+            pitch: 0.8
+            volume: 0.4
+##------------------##
